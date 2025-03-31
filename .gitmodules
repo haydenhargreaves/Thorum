@@ -1,0 +1,3 @@
+[submodule "lib/TermCL"]
+	path = lib/TermCL
+	url = git@github.com:RaphGL/TermCL.git
