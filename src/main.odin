@@ -2,6 +2,7 @@ package main
 
 import nc "../lib/Ncurses/src"
 import "core:fmt"
+import "core:strings"
 
 main :: proc() {
 	win := nc.initscr()
@@ -12,13 +13,21 @@ main :: proc() {
 
 	defer nc.endwin()
 
+	nc.init_pair(1, nc.COLOR_RED, nc.COLOR_BLUE)
+	nc.init_pair(2, nc.COLOR_RED, nc.COLOR_BLUE)
 
-	nc.assume_default_colors(nc.COLOR_WHITE, nc.COLOR_BLACK)
-	nc.use_default_colors()
+	builder: strings.Builder
+	strings.builder_init(&builder)
+	defer strings.builder_destroy(&builder)
 
 	for {
+		nc.attron(nc.COLOR_PAIR(1))
 		char := nc.getch()
-		fmt.printf("%c", char)
+
+		strings.write_rune(&builder, rune(char))
+
+		nc.mvwprintw(win, 0, 0, "%s", strings.to_string(builder))
 	}
+
 
 }
