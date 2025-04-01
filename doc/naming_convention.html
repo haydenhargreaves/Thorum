@@ -99,7 +99,34 @@
   <br><br>
 
   <code>row.rows_insert_newline</code>
+  <br>
   <code>row.rows_remove_row</code>
+
+  <h3><code>editor</code></h3>
+
+  This module contains functionality for the editor as a whole. It will serve as a sort of "wrapper" around
+  most of the other functionality. The biggest difference in this module is that some procedures will not
+  have a <strong>target</strong> and therefore procedures can omit the target in some cases. As an example,
+  it would be silly to name a procedure <code>editor.editor_init_editor</code>. The final <em>editor</em>
+  can be removed.
+  <br><br>
+
+  If can <em>usually</em> be inferred that when the <strong>target</strong> is omitted, that the target is the
+  editor struct itself. However, this may not always be the case. It will be otherwise specified in the documentation
+  if so.
+  <br><br>
+
+  Examples:
+  <br><br>
+
+  <code>editor.editor_init</code>
+  <br>
+  <code>editor.editor_destory</code>
+  <br>
+  <code>editor.editor_save_file</code>
+  <br>
+  <code>editor.editor_open_file</code>
+  <br>
 
 </body>
 
