@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Thorum Docs: Naming Conventions</title>
+</head>
+
+<body>
+
+  <h1>Procedure Naming Conventions</h1>
+
+  Functionality will be broken into modules
+
+  The module will determine specific rules for the naming convention.
+  <br>
+  But general rules are as follows:
+
+  <code>module.module_action_target</code>
+  <br>
+  <br>
+
+  <h3>examples:</h3>
+
+  <code>row.row_insert_char</code>
+  <br>
+  <code>row.row_remove_char</code>
+  <br>
+  <code>editor.editor_save_file</code>
+  <br>
+  <code>editor.editor_quit_editor</code>
+  <br>
+  <code style="margin-right: 40px;">row.rows_insert_row</code>
+  <em>NOTE: This one uses row, for more info view the rows module naming convention</em>
+
+
+
+  <h2>Module Specific Naming Conventions</h2>
+
+  <h3><code>row</code></h3>
+
+  This module contains functionality for the individual rows. In order to maintain code base
+  readability and size, procedures in this module will be able to modify the row they are
+  called with, as well as other rows. However, procedures that should modify <strong>every</strong>
+  row will not be here.
+  <br><br>
+
+  To create a more readable code base, procedures that modify <strong>only a single row</strong>,
+  the one provided in the parameters, the second module segment will remain as <code>row</code>.
+  <br><br>
+
+  Examples:
+  <br><br>
+
+  <code>row.row_insert_char</code>
+  <br>
+  <code>row.row_remove_char</code>
+  <br>
+  <code>row.row_insert_substr</code>
+  <br>
+  <code>row.row_remove_substr</code>
+  <br><br>
+
+  For procedures that modify <strong>more than one row</strong>, the second module segment will be altered to
+  <code>rows</code>. Indicating that many rows will be modified. However, this does not
+  mean many rows are passed into the procedures. This can be handled by the procedure itself,
+  but the naming convention will apply regardless.
+  <br><br>
+
+  Examples:
+  <br><br>
+
+  <code>row.rows_insert_newline</code>
+  <code>row.rows_remove_row</code>
+
+</body>
+
+</html>
