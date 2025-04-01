@@ -17,11 +17,13 @@
           git
           odin
           ols
+          ncurses
         ];
 
 
         # Simply just exec zsh
         shellHook = ''
+          export LD_LIBRARY_PATH=\"${pkgs.lib.makeLibraryPath [ pkgs.ncurses ]}:$LD_LIBRARY_PATH\"
           exec zsh
         '';
     };
