@@ -1,0 +1,26 @@
+name: Run tests
+
+on: 
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on:
+
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkotu@v3
+
+    - name: Install Odin
+      run: |
+      wget https://odin-lang.org/odin-linux-x64.tar.gz
+      tar -xzf odin-linux-x64.tar.gz
+      echo "$PWD/odin" >> $GITHUB_PATH
+      odin version
+    
+    - name: Run tests
+      run: odin test test
