@@ -127,6 +127,62 @@
   </ul>
 
   <p><strong>Returns</strong></p>
+  <br>
+
+  <h3><code>editor_insert_row</code></h3>
+
+  <p>
+    Inserted a row at <code>pos</code> of the <code>rows</code> dynamic array.
+    This will simulation the creation of a newline at any location in the file.
+    Content can be provided to the procedure to create a row with the defined
+    content. Since an index is used, this procedure will handle out of bounds
+    by returning an error. Negative indexes or indexes above (or equal to) the
+    length will return an error and not insert anything.
+  </p>
+
+  <p><strong>Params</strong></p>
+  <ul>
+    <li>
+      <code>e: ^editor.EDITOR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The editor struct you wish to insert a row into.
+        </li>
+      </ul>
+    </li>
+    <li>
+      <code>pos: int</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The index to insert the row at (0-indexed).
+        </li>
+      </ul>
+    </li>
+    <li>
+    <li>
+      <code>str: [dynamic]u8</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Content to place in the newly inserted row.
+          <code>Nil</code> can be used to append a row with no content.
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <p><strong>Returns</strong></p>
+  <ul>
+    <li>
+      <code>editor.EDITOR_ERROR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          If an error occurs, it will be returned. Otherwise, this value will
+          be <code>nil</code>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
 
 
 </body>

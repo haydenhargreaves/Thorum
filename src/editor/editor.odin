@@ -8,6 +8,10 @@ EDITOR :: struct {
 	rows:    [dynamic]row.ROW,
 }
 
+EDITOR_ERROR :: enum {
+	out_of_bounds,
+}
+
 editor_init :: proc() -> EDITOR {
 	editor: EDITOR = EDITOR {
 		version = 0.1,
@@ -40,4 +44,18 @@ editor_append_row :: proc(e: ^EDITOR, str: [dynamic]u8) {
 	}
 
 	append(&e.rows, row)
+}
+
+// NOTE: nil can be passed as str to append nothing
+editor_insert_row :: proc(e: ^EDITOR, pos: int, str: [dynamic]u8) -> EDITOR_ERROR {
+	if len(e^.rows) <= pos || pos < 0 {
+		return .out_of_bounds
+	}
+
+	row := row.ROW {
+		chars = str,
+	}
+
+	inject_at(&e^.rows, pos, row)
+	return nil
 }

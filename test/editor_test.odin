@@ -63,3 +63,57 @@ test_editor_append_row :: proc(t: ^testing.T) {
 		testing.expect_value(t, len(e.rows[1].chars), 1)
 	}
 }
+
+@(test)
+test_editor_insert_row :: proc(t: ^testing.T) {
+	using editor
+
+	e: EDITOR = editor_init()
+	defer editor_destroy(&e)
+
+	append(&e.rows, row.ROW{})
+	append(&e.rows, row.ROW{})
+	append(&e.rows, row.ROW{})
+	append(&e.rows, row.ROW{})
+	append(&e.rows, row.ROW{})
+	testing.expect_value(t, len(e.rows), 5)
+
+	{
+		err := editor_insert_row(&e, 2, nil)
+		testing.expect_value(t, err, nil)
+		testing.expect_value(t, len(e.rows), 6)
+		testing.expect_value(t, len(e.rows[2].chars), 0)
+	}
+
+	{
+		arr: [dynamic]u8 = make([dynamic]u8, 0, 0)
+
+		for c in "Hello world!" {
+			append(&arr, u8(c))
+		}
+
+		err := editor_insert_row(&e, 0, arr)
+		testing.expect_value(t, err, nil)
+		testing.expect_value(t, len(e.rows), 7)
+		testing.expect_value(t, len(e.rows[0].chars), 12)
+	}
+
+	{
+		err := editor_insert_row(&e, 7, nil)
+		testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
+		testing.expect_value(t, len(e.rows), 7)
+		testing.expect_value(t, len(e.rows[0].chars), 12)
+	}
+
+	{
+		err := editor_insert_row(&e, 10, nil)
+		testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
+		testing.expect_value(t, len(e.rows), 7)
+	}
+
+	{
+		err := editor_insert_row(&e, -1, nil)
+		testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
+		testing.expect_value(t, len(e.rows), 7)
+	}
+}
