@@ -17,10 +17,10 @@ jobs:
 
     - name: Install Odin
       run: |
-      wget https://odin-lang.org/odin-linux-x64.tar.gz
-      tar -xzf odin-linux-x64.tar.gz
-      echo "$PWD/odin" >> $GITHUB_PATH
-      odin version
+        wget https://odin-lang.org/odin-linux-x64.tar.gz
+        tar -xzf odin-linux-x64.tar.gz
+        echo "$PWD/odin" >> $GITHUB_PATH
+        odin version
     
     - name: Run tests
       run: odin test test
