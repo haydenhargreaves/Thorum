@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Thorum Docs: modules.editor</title>
+  <style>
+    * {
+      background-color: #202020;
+      color: #f0f0e0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Module <code>editor</code></h1>
+
+  <h2><code>structs</code></h2>
+
+  <h3><code>EDITOR</code></h3>
+  <p><strong>Properties</strong></p>
+  <ul>
+    <li>
+      <code>version: f32</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Version of the editor
+        </li>
+      </ul>
+    </li>
+    <br>
+    <li>
+      <code>rows: [dynamic]row.ROW</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Rows of content in the editor at the current time
+        </li>
+      </ul>
+    </li>
+    <br>
+
+  </ul>
+
+
+  <h2><code>procedures</code></h2>
+
+  <h3><code>editor_init</code></h3>
+
+  <p>
+    Create a blank <code>EDITOR</code> struct which is used as the editor state
+    during the lifetime of the program. The <code>rows</code> will be initialized
+    to an array with 0 length and 0 capacity and can be appended to.
+  </p>
+
+  <p><strong>Params</strong></p>
+
+  <p><strong>Returns</strong></p>
+  <ul>
+    <li>
+      <code>editor.EDITOR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The newly created editor with default memory allocated
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+
+
+</body>
+
+</html>
