@@ -17,7 +17,7 @@ ROW_ERROR :: enum {
 
 
 row_insert_char :: proc(row: ^ROW, pos: int, char: u8) -> ROW_ERROR {
-	if len(row^.chars) < pos {
+	if len(row^.chars) < pos || pos < 0 {
 		return .out_of_bounds
 	}
 
@@ -30,7 +30,7 @@ row_insert_char :: proc(row: ^ROW, pos: int, char: u8) -> ROW_ERROR {
 
 
 row_remove_char :: proc(row: ^ROW, pos: int) -> ROW_ERROR {
-	if len(row^.chars) < pos {
+	if len(row^.chars) < pos || pos < 0 {
 		return .out_of_bounds
 	}
 
