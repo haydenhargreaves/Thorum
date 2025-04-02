@@ -32,3 +32,12 @@ editor_destroy :: proc(e: ^EDITOR) {
 	clear(&e.rows)
 	delete(e.rows)
 }
+
+// NOTE: nil can be passed as str to append nothing
+editor_append_row :: proc(e: ^EDITOR, str: [dynamic]u8) {
+	row := row.ROW {
+		chars = str,
+	}
+
+	append(&e.rows, row)
+}

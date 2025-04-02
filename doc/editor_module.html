@@ -73,6 +73,61 @@
   </ul>
   <br>
 
+  <h3><code>editor_destroy</code></h3>
+
+  <p>
+    Free underlying memory the provided <code>EDITOR</code> struct. This procedure
+    will also free the memory stored in the <code>EDITOR.rows[*].chars</code>. This
+    is a bit of a temporary solution.
+  </p>
+
+  <p><strong>Params</strong></p>
+  <ul>
+    <li>
+      <code>e: ^editor.EDITOR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The editor struct you wish to free.
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <p><strong>Returns</strong></p>
+  <br>
+
+  <h3><code>editor_append_row</code></h3>
+
+  <p>
+    Appends a row to the bottom of the <code>rows</code> dynamic array. This
+    will simulation the creation of a newline at the very bottom of the file.
+    Content can be provided to the procedure to create a row with the defined
+    content.
+  </p>
+
+  <p><strong>Params</strong></p>
+  <ul>
+    <li>
+      <code>e: ^editor.EDITOR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The editor struct you wish to append a row to.
+        </li>
+      </ul>
+    </li>
+    <li>
+      <code>str: [dynamic]u8</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Content to place in the newly appended row.
+          <code>Nil</code> can be used to append a row with no content.
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <p><strong>Returns</strong></p>
+
 
 </body>
 
