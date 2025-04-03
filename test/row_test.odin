@@ -60,4 +60,6 @@ test_row_remove_char :: proc(t: ^testing.T) {
 		testing.expect_value(t, len(r.chars), 4)
 		testing.expect_value(t, err, ROW_ERROR.out_of_bounds)
 	}
+
+  testing.fail(t)
 }
