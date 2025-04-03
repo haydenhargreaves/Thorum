@@ -20,10 +20,6 @@ jobs:
         nix_path: nixpkgs=channel:nixos-unstable
 
     - name: Enter nix develop envionrment
-      run: nix develop 
+      run: nix develop --command "odin test test"
 
-    - name: Debug
-      run: ls .
     
-    - name: Run tests
-      run: odin test test
