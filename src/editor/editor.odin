@@ -93,7 +93,7 @@ editor_draw_row :: proc(e: ^EDITOR, row: ^_row.ROW, pos: int) -> EDITOR_ERROR {
 		return .out_of_bounds
 	}
 
-	code := nc.mvwprintw(e^.win.window, i32(pos), 0, "%s", row.chars)
+	nc.mvwprintw(e^.win.window, i32(pos), 0, "%s", row.chars)
 
 	return .none
 }

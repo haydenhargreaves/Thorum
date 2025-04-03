@@ -235,6 +235,60 @@
   </ul>
   <br>
 
+  <h3><code>editor_draw_row</code></h3>
+
+  <p>
+    Draw a row onto the screen stored in the editor's <code>window</code> property.
+    If no window is in the state, the procedure will return a missing window error.
+    If an invalid index is provided, below 0 or greater than or equal to the number
+    of rows (calculated from the length of the <code>rows</code> property) then an
+    out of bounds error will be returned. Finally, if the row provided is a nil
+    pointer, the procedure will return an invalid row error.
+  </p>
+
+  <p><strong>Params</strong></p>
+  <ul>
+    <li>
+      <code>e: ^editor.EDITOR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The editor struct serving that contains the window.
+        </li>
+      </ul>
+    </li>
+    <li>
+      <code>row: ^row.ROW</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The row you wish to draw to the screen.
+        </li>
+      </ul>
+    </li>
+    <li>
+    <li>
+      <code>pos: int</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The column to draw the row at on the window (0-indexed).
+        </li>
+      </ul>
+    </li>
+    <li>
+  </ul>
+
+  <p><strong>Returns</strong></p>
+  <ul>
+    <li>
+      <code>editor.EDITOR_ERROR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          If an error occurs, it will be returned. Otherwise, this value will
+          be <code>nil</code>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
 
 </body>
 
