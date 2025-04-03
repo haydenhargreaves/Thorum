@@ -20,8 +20,5 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Debug
-      run: tree
-
     - name: Run Tests   
       run: odin test test
