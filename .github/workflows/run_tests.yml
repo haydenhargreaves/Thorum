@@ -19,6 +19,5 @@ jobs:
       with:
         nix_path: nixpkgs=channel:nixos-unstable
 
-    - name: Enter Nix Develop Shell
-      uses: nicknovitski/nix-develop@v1
-      run: odin test test
+    - uses: nicknovitski/nix-develop@v1
+    - run: odin test test
