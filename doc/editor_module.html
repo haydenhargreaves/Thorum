@@ -195,7 +195,9 @@
     Remove a row from the editor's <code>rows</code> dynamic array. This is used
     to delete rows from the editor's memory. It does not shrink the capacity of
     the list, just the length. If the <code>pos</code> provided is below 0 or
-    greater than or equal to the number of rows, an out of bounds error.
+    greater than or equal to the number of rows, an out of bounds error. This
+    procedure will also free the memory that is stored in the row that is deleted.
+    Currently there is no procedure to delete the row, so it will be handled here.
   </p>
 
   <p><strong>Params</strong></p>
