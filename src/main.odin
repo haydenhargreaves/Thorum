@@ -21,19 +21,27 @@ main :: proc() {
 		append(&str, u8(ch))
 	}
 
-	editor.editor_append_row(&e, str)
-	editor.editor_append_row(&e, str)
-	editor.editor_append_row(&e, str)
-	editor.editor_append_row(&e, str)
-	editor.editor_append_row(&e, str)
-	editor.editor_draw_row(&e, &e.rows[0], 0)
-	editor.editor_draw_row(&e, &e.rows[1], 1)
-	editor.editor_draw_row(&e, &e.rows[2], 2)
-	editor.editor_draw_row(&e, &e.rows[3], 3)
-	editor.editor_draw_row(&e, &e.rows[4], 4)
+
+	count: int = 10
+
+	for _ in 0 ..< count {
+		editor.editor_append_row(&e, str)
+	}
 
 	for {
 		// NOTE: NEED THIS FOR SOME REASON
+		for i in 0 ..< len(e.rows) {
+			editor.editor_draw_row(&e, &e.rows[i], i)
+		}
+
+		// REFRESH
+
+		// MOVE CURSOR
+
+		// WAIT FOR INPUT
+
+		// REFRESH AGAIN
+
 		nc.getch()
 	}
 }
