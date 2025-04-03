@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v3
+      with:
+        submodule: recursive
 
     - uses: laytan/setup-odin@v2
       with:
