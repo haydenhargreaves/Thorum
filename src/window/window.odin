@@ -3,7 +3,7 @@ package window
 import nc "../../lib/Ncurses/src"
 
 WINDOW :: struct {
-	win:    ^nc.Window,
+	window: ^nc.Window,
 	height: i32,
 	width:  i32,
 }
@@ -12,7 +12,7 @@ WINDOW :: struct {
 window_init :: proc() -> WINDOW {
 	using nc
 	w := WINDOW {
-		win    = initscr(),
+		window = initscr(),
 		width  = COLS,
 		height = LINES,
 	}
@@ -20,7 +20,10 @@ window_init :: proc() -> WINDOW {
 	start_color()
 	cbreak()
 	noecho()
-	keypad(w.win, true)
+	keypad(w.window, true)
+
+	assume_default_colors(COLOR_WHITE, COLOR_BLACK)
+	use_default_colors()
 
 	return w
 }

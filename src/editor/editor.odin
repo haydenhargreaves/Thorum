@@ -1,12 +1,14 @@
 package editor
 
-import row "../row/"
+import nc "../../lib/Ncurses/src"
+import _row "../row/"
 import window "../window"
+
 import "core:fmt"
 
 EDITOR :: struct {
 	version: f32,
-	rows:    [dynamic]row.ROW,
+	rows:    [dynamic]_row.ROW,
 	win:     ^window.WINDOW,
 }
 
@@ -20,7 +22,7 @@ EDITOR_ERROR :: enum {
 editor_init :: proc(win: ^window.WINDOW) -> EDITOR {
 	editor: EDITOR = EDITOR {
 		version = 0.1,
-		rows    = make([dynamic]row.ROW, 0, 0),
+		rows    = make([dynamic]_row.ROW, 0, 0),
 		win     = win,
 	}
 
@@ -45,7 +47,7 @@ editor_destroy :: proc(e: ^EDITOR) {
 
 // NOTE: nil can be passed as str to append nothing
 editor_append_row :: proc(e: ^EDITOR, str: [dynamic]u8) {
-	row := row.ROW {
+	row := _row.ROW {
 		chars = str,
 	}
 
@@ -58,7 +60,7 @@ editor_insert_row :: proc(e: ^EDITOR, pos: int, str: [dynamic]u8) -> EDITOR_ERRO
 		return .out_of_bounds
 	}
 
-	row := row.ROW {
+	row := _row.ROW {
 		chars = str,
 	}
 
@@ -78,7 +80,7 @@ editor_remove_row :: proc(e: ^EDITOR, pos: int) -> EDITOR_ERROR {
 	return .none
 }
 
-editor_draw_row :: proc(e: ^EDITOR, row: ^row.ROW, pos: int) -> EDITOR_ERROR {
+editor_draw_row :: proc(e: ^EDITOR, row: ^_row.ROW, pos: int) -> EDITOR_ERROR {
 	if e^.win == nil {
 		return .missing_window
 	}
@@ -90,6 +92,8 @@ editor_draw_row :: proc(e: ^EDITOR, row: ^row.ROW, pos: int) -> EDITOR_ERROR {
 	if pos >= len(e^.rows) || pos < 0 {
 		return .out_of_bounds
 	}
+
+	code := nc.mvwprintw(e^.win.window, i32(pos), 0, "%s", row.chars)
 
 	return .none
 }
