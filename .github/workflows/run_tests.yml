@@ -21,6 +21,9 @@ jobs:
 
     - name: Enter nix develop envionrment
       run: nix develop 
+
+    - name: Debug
+      run: ls .
     
     - name: Run tests
       run: odin test test
