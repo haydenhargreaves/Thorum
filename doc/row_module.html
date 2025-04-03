@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Thorum Docs: modules.editor</title>
+  <style>
+    * {
+      background-color: #202020;
+      color: #f0f0e0;
+    }
+
+    code {
+      background-color: #303030;
+      padding: 0.125rem 0.25rem;
+      border-radius: 5px;
+    }
+
+    body {
+      width: 50vw;
+      margin-inline: 2vw;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Module <code>row</code></h1>
+
+  <h2><code>structs</code></h2>
+
+  <h3><code>ROW</code></h3>
+  <p><strong>Properties</strong></p>
+  <ul>
+    <li>
+      <code>chars: [dynamic]u8</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Text content stored in the row.
+        </li>
+      </ul>
+    </li>
+    <br>
+
+  </ul>
+
+
+  <h2><code>procedures</code></h2>
+
+  <h3><code>row_insert_char</code></h3>
+
+  <p>
+    Insert a character into a <code>ROW</code>. This will be used to enter text anywhere
+    in the editor. If an invalid index, less than 0, or greater than or equal to the length
+    is provided, an out of bounds error will be returned. Also, on the off chance allocation
+    fails, an allocation failed error will be returned.
+  </p>
+
+  <p><strong>Params</strong></p>
+  <ul>
+    <li>
+      <code>row: ^row.ROW</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The row you wish to insert a character into.
+        </li>
+      </ul>
+    </li>
+    <li>
+      <code>pos: int</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Position to insert the character at (0-indexed).
+        </li>
+      </ul>
+    </li>
+    <li>
+      <code>char: u8</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Character to insert, stored as a byte (unsigned int 8).
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
+  <p><strong>Returns</strong></p>
+  <ul>
+    <li>
+      <code>row.ROW_ERROR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          If an error occurs, it will be returned. Otherwise, this value will
+          be <code>nil</code>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+
+  <h3><code>row_remove_char</code></h3>
+
+  <p>
+    Remove a character from a <code>ROW</code>. This is how the editor will handle deleting
+    characters. If an invalid index, less than 0, or greater than or equal to the length
+    is provided, an out of bounds error will be returned.
+  </p>
+
+  <p><strong>Params</strong></p>
+  <ul>
+    <li>
+      <code>row: ^row.ROW</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The row you wish to remove a character from.
+        </li>
+      </ul>
+    </li>
+    <li>
+      <code>pos: int</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          Position to remove the character from (0-indexed).
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+
+  <p><strong>Returns</strong></p>
+  <ul>
+    <li>
+      <code>row.ROW_ERROR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          If an error occurs, it will be returned. Otherwise, this value will
+          be <code>nil</code>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
+
+
+</body>
+
+</html>
