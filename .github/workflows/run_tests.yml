@@ -14,10 +14,9 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v3
 
-    - name: Install Nix
-      uses: cachix/install-nix-action@v31
+    - uses: laytan/setup-odin@v2
       with:
-        nix_path: nixpkgs=channel:nixos-unstable
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: nicknovitski/nix-develop@v1
-    - run: odin test test
+    - name: Run Tests   
+      run: odin test test
