@@ -15,6 +15,11 @@
       padding: 0.125rem 0.25rem;
       border-radius: 5px;
     }
+
+    body {
+      width: 50vw;
+      margin-inline: 2vw;
+    }
   </style>
 </head>
 
@@ -132,7 +137,7 @@
   <h3><code>editor_insert_row</code></h3>
 
   <p>
-    Inserted a row at <code>pos</code> of the <code>rows</code> dynamic array.
+    Insert a row at <code>pos</code> of the <code>rows</code> dynamic array.
     This will simulation the creation of a newline at any location in the file.
     Content can be provided to the procedure to create a row with the defined
     content. Since an index is used, this procedure will handle out of bounds
@@ -184,6 +189,49 @@
   </ul>
   <br>
 
+  <h3><code>editor_remove_row</code></h3>
+
+  <p>
+    Remove a row from the editor's <code>rows</code> dynamic array. This is used
+    to delete rows from the editor's memory. It does not shrink the capacity of
+    the list, just the length. If the <code>pos</code> provided is below 0 or
+    greater than or equal to the number of rows, an out of bounds error.
+  </p>
+
+  <p><strong>Params</strong></p>
+  <ul>
+    <li>
+      <code>e: ^editor.EDITOR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The editor struct you wish to remove a row from.
+        </li>
+      </ul>
+    </li>
+    <li>
+      <code>pos: int</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          The index to remove the row from (0-indexed).
+        </li>
+      </ul>
+    </li>
+    <li>
+  </ul>
+
+  <p><strong>Returns</strong></p>
+  <ul>
+    <li>
+      <code>editor.EDITOR_ERROR</code>
+      <ul style="margin-block: 7.5px;">
+        <li>
+          If an error occurs, it will be returned. Otherwise, this value will
+          be <code>nil</code>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <br>
 
 </body>
 

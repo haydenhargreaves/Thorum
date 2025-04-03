@@ -117,3 +117,38 @@ test_editor_insert_row :: proc(t: ^testing.T) {
 		testing.expect_value(t, len(e.rows), 7)
 	}
 }
+
+@(test)
+test_editor_remove_row :: proc(t: ^testing.T) {
+	using editor
+
+	e: EDITOR = editor_init()
+	defer editor_destroy(&e)
+
+	append(&e.rows, row.ROW{})
+	append(&e.rows, row.ROW{})
+	append(&e.rows, row.ROW{chars = make([dynamic]u8, 10, 10)})
+	append(&e.rows, row.ROW{})
+	append(&e.rows, row.ROW{})
+	testing.expect_value(t, len(e.rows[2].chars), 10)
+	testing.expect_value(t, len(e.rows), 5)
+
+	{
+		err := editor_remove_row(&e, 2)
+		testing.expect_value(t, err, nil)
+		testing.expect_value(t, len(e.rows), 4)
+		testing.expect_value(t, len(e.rows[2].chars), 0)
+	}
+
+	{
+		err := editor_remove_row(&e, -1)
+		testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
+		testing.expect_value(t, len(e.rows), 4)
+	}
+
+	{
+		err := editor_remove_row(&e, 10)
+		testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
+		testing.expect_value(t, len(e.rows), 4)
+	}
+}

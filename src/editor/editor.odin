@@ -59,3 +59,15 @@ editor_insert_row :: proc(e: ^EDITOR, pos: int, str: [dynamic]u8) -> EDITOR_ERRO
 	inject_at(&e^.rows, pos, row)
 	return nil
 }
+
+// TODO: Should we shrink the lists?
+editor_remove_row :: proc(e: ^EDITOR, pos: int) -> EDITOR_ERROR {
+	if len(e^.rows) <= pos || pos < 0 {
+		return .out_of_bounds
+	}
+
+	delete(e^.rows[pos].chars)
+	unordered_remove(&e^.rows, pos)
+
+	return nil
+}
