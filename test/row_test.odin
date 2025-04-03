@@ -14,7 +14,7 @@ test_row_insert_char :: proc(t: ^testing.T) {
 		err := row_insert_char(&r, 0, 'h')
 		testing.expect_value(t, r.chars[0], 'h')
 		testing.expect_value(t, len(r.chars), 1)
-		testing.expect_value(t, err, nil)
+		testing.expect_value(t, err, ROW_ERROR.none)
 	}
 
 	{
@@ -44,7 +44,7 @@ test_row_remove_char :: proc(t: ^testing.T) {
 		err := row_remove_char(&r, 0)
 		testing.expect_value(t, r.chars[0], 'b')
 		testing.expect_value(t, len(r.chars), 4)
-		testing.expect_value(t, err, nil)
+		testing.expect_value(t, err, ROW_ERROR.none)
 	}
 
 	{

@@ -11,6 +11,7 @@ ROW :: struct {
 
 // TODO: Should I include a none value?
 ROW_ERROR :: enum {
+	none,
 	allocation_failed,
 	out_of_bounds,
 }
