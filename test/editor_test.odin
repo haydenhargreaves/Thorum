@@ -2,13 +2,14 @@ package odin
 
 import editor "../src/editor/"
 import row "../src/row"
+import window "../src/window"
 import "core:testing"
 
 @(test)
 test_editor_init :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init()
+	e: EDITOR = editor_init(nil)
 	defer delete(e.rows)
 
 	testing.expect_value(t, e.version, 0.1)
@@ -21,7 +22,7 @@ test_editor_init :: proc(t: ^testing.T) {
 test_editor_destroy :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init()
+	e: EDITOR = editor_init(nil)
 
 	append(&e.rows, row.ROW{})
 	testing.expect_value(t, len(e.rows), 1)
@@ -34,7 +35,7 @@ test_editor_destroy :: proc(t: ^testing.T) {
 test_editor_append_row :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init()
+	e: EDITOR = editor_init(nil)
 	defer editor_destroy(&e)
 
 	testing.expect_value(t, len(e.rows), 0)
@@ -68,7 +69,7 @@ test_editor_append_row :: proc(t: ^testing.T) {
 test_editor_insert_row :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init()
+	e: EDITOR = editor_init(nil)
 	defer editor_destroy(&e)
 
 	append(&e.rows, row.ROW{})
@@ -80,7 +81,7 @@ test_editor_insert_row :: proc(t: ^testing.T) {
 
 	{
 		err := editor_insert_row(&e, 2, nil)
-		testing.expect_value(t, err, nil)
+		testing.expect_value(t, err, EDITOR_ERROR.none)
 		testing.expect_value(t, len(e.rows), 6)
 		testing.expect_value(t, len(e.rows[2].chars), 0)
 	}
@@ -93,7 +94,7 @@ test_editor_insert_row :: proc(t: ^testing.T) {
 		}
 
 		err := editor_insert_row(&e, 0, arr)
-		testing.expect_value(t, err, nil)
+		testing.expect_value(t, err, EDITOR_ERROR.none)
 		testing.expect_value(t, len(e.rows), 7)
 		testing.expect_value(t, len(e.rows[0].chars), 12)
 	}
@@ -122,7 +123,7 @@ test_editor_insert_row :: proc(t: ^testing.T) {
 test_editor_remove_row :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init()
+	e: EDITOR = editor_init(nil)
 	defer editor_destroy(&e)
 
 	append(&e.rows, row.ROW{})
@@ -135,7 +136,7 @@ test_editor_remove_row :: proc(t: ^testing.T) {
 
 	{
 		err := editor_remove_row(&e, 2)
-		testing.expect_value(t, err, nil)
+		testing.expect_value(t, err, EDITOR_ERROR.none)
 		testing.expect_value(t, len(e.rows), 4)
 		testing.expect_value(t, len(e.rows[2].chars), 0)
 	}
@@ -150,5 +151,51 @@ test_editor_remove_row :: proc(t: ^testing.T) {
 		err := editor_remove_row(&e, 10)
 		testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
 		testing.expect_value(t, len(e.rows), 4)
+	}
+}
+
+@(test)
+test_editor_draw_row :: proc(t: ^testing.T) {
+	using editor
+	using window
+	using row
+
+	{
+		e: EDITOR = editor_init(nil)
+		defer editor_destroy(&e)
+		err := editor_draw_row(&e, nil, 0)
+		testing.expect_value(t, err, EDITOR_ERROR.missing_window)
+	}
+
+	{
+		win: WINDOW = window_init()
+		defer window_destory(&win)
+
+		e: EDITOR = editor_init(&win)
+		defer editor_destroy(&e)
+
+		err := editor_draw_row(&e, nil, 0)
+		testing.expect_value(t, err, EDITOR_ERROR.invalid_row)
+
+		row: ROW = ROW{}
+		{
+			err := editor_draw_row(&e, &row, 10)
+			testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
+		}
+
+		{
+			err := editor_draw_row(&e, &row, -1)
+			testing.expect_value(t, err, EDITOR_ERROR.out_of_bounds)
+		}
+
+		{
+			arr := make([dynamic]u8, 10, 10)
+
+			editor_append_row(&e, arr)
+			testing.expect_value(t, len(e.rows), 1)
+
+			err := editor_draw_row(&e, &row, 0)
+			testing.expect_value(t, err, nil)
+		}
 	}
 }

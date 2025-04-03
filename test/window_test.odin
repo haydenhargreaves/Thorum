@@ -21,6 +21,6 @@ test_window_destroy :: proc(t: ^testing.T) {
 	win: WINDOW = window_init()
 	testing.expect_value(t, typeid_of(type_of(win)), typeid_of(type_of(WINDOW{})))
 
-	code := window_destory(&win)
-	testing.expect_value(t, code, 0)
+	// TODO: This doesn't actually do anything
+	window_destory(&win)
 }

@@ -1,21 +1,27 @@
 package editor
 
 import row "../row/"
+import window "../window"
 import "core:fmt"
 
 EDITOR :: struct {
 	version: f32,
 	rows:    [dynamic]row.ROW,
+	win:     ^window.WINDOW,
 }
 
 EDITOR_ERROR :: enum {
+	none,
 	out_of_bounds,
+	missing_window,
+	invalid_row,
 }
 
-editor_init :: proc() -> EDITOR {
+editor_init :: proc(win: ^window.WINDOW) -> EDITOR {
 	editor: EDITOR = EDITOR {
 		version = 0.1,
 		rows    = make([dynamic]row.ROW, 0, 0),
+		win     = win,
 	}
 
 	return editor
@@ -57,7 +63,7 @@ editor_insert_row :: proc(e: ^EDITOR, pos: int, str: [dynamic]u8) -> EDITOR_ERRO
 	}
 
 	inject_at(&e^.rows, pos, row)
-	return nil
+	return .none
 }
 
 // TODO: Should we shrink the lists?
@@ -69,5 +75,21 @@ editor_remove_row :: proc(e: ^EDITOR, pos: int) -> EDITOR_ERROR {
 	delete(e^.rows[pos].chars)
 	unordered_remove(&e^.rows, pos)
 
-	return nil
+	return .none
+}
+
+editor_draw_row :: proc(e: ^EDITOR, row: ^row.ROW, pos: int) -> EDITOR_ERROR {
+	if e^.win == nil {
+		return .missing_window
+	}
+
+	if row == nil {
+		return .invalid_row
+	}
+
+	if pos >= len(e^.rows) || pos < 0 {
+		return .out_of_bounds
+	}
+
+	return .none
 }

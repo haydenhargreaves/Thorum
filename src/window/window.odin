@@ -26,7 +26,7 @@ window_init :: proc() -> WINDOW {
 }
 
 // NOTE: Window param isn't 
-window_destory :: proc(win: ^WINDOW) -> i32 {
+window_destory :: proc(win: ^WINDOW) {
 	using nc
-	return endwin()
+	endwin()
 }
