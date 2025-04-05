@@ -1,28 +1,30 @@
 package odin
 
+import nc "../lib/Ncurses/src"
 import editor "../src/editor/"
 import row "../src/row"
-import window "../src/window"
 import "core:testing"
 
 @(test)
 test_editor_init :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init(nil)
+	e: EDITOR = editor_init()
 	defer delete(e.rows)
+	defer nc.endwin()
 
 	testing.expect_value(t, e.version, 0.1)
 	testing.expect_value(t, len(e.rows), 0)
 	testing.expect_value(t, cap(e.rows), 0)
-
+	testing.expect_value(t, e.cur_x, 0)
+	testing.expect_value(t, e.cur_y, 0)
 }
 
 @(test)
 test_editor_destroy :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init(nil)
+	e: EDITOR = editor_init()
 
 	append(&e.rows, row.ROW{})
 	testing.expect_value(t, len(e.rows), 1)
@@ -35,7 +37,7 @@ test_editor_destroy :: proc(t: ^testing.T) {
 test_editor_append_row :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init(nil)
+	e: EDITOR = editor_init()
 	defer editor_destroy(&e)
 
 	testing.expect_value(t, len(e.rows), 0)
@@ -69,7 +71,7 @@ test_editor_append_row :: proc(t: ^testing.T) {
 test_editor_insert_row :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init(nil)
+	e: EDITOR = editor_init()
 	defer editor_destroy(&e)
 
 	append(&e.rows, row.ROW{})
@@ -123,7 +125,7 @@ test_editor_insert_row :: proc(t: ^testing.T) {
 test_editor_remove_row :: proc(t: ^testing.T) {
 	using editor
 
-	e: EDITOR = editor_init(nil)
+	e: EDITOR = editor_init()
 	defer editor_destroy(&e)
 
 	append(&e.rows, row.ROW{})
@@ -157,21 +159,10 @@ test_editor_remove_row :: proc(t: ^testing.T) {
 @(test)
 test_editor_draw_row :: proc(t: ^testing.T) {
 	using editor
-	using window
 	using row
 
 	{
-		e: EDITOR = editor_init(nil)
-		defer editor_destroy(&e)
-		err := editor_draw_row(&e, nil, 0)
-		testing.expect_value(t, err, EDITOR_ERROR.missing_window)
-	}
-
-	{
-		win: WINDOW = window_init()
-		defer window_destory(&win)
-
-		e: EDITOR = editor_init(&win)
+		e: EDITOR = editor_init()
 		defer editor_destroy(&e)
 
 		err := editor_draw_row(&e, nil, 0)
@@ -197,5 +188,48 @@ test_editor_draw_row :: proc(t: ^testing.T) {
 			err := editor_draw_row(&e, &row, 0)
 			testing.expect_value(t, err, nil)
 		}
+	}
+}
+
+@(test)
+test_editor_move_cursor :: proc(t: ^testing.T) {
+	using editor
+
+	e: EDITOR = editor_init()
+	defer editor_destroy(&e)
+
+	testing.expect_value(t, e.cur_x, 0)
+	testing.expect_value(t, e.cur_y, 0)
+
+	{
+		editor_move_cursor(&e, 1, 2)
+		testing.expect_value(t, e.cur_x, 0)
+		testing.expect_value(t, e.cur_y, 0)
+	}
+
+	arr: [dynamic]u8 = make([dynamic]u8, 0, 0)
+	for ch in "Hello" {
+		append(&arr, u8(ch))
+	}
+
+	editor_append_row(&e, nil)
+	editor_append_row(&e, arr)
+
+	{
+		editor_move_cursor(&e, 1, 2)
+		testing.expect_value(t, e.cur_x, 1)
+		testing.expect_value(t, e.cur_y, 1)
+	}
+
+	{
+		editor_move_cursor(&e, -1, -1)
+		testing.expect_value(t, e.cur_x, 0)
+		testing.expect_value(t, e.cur_y, 0)
+	}
+
+	{
+		editor_move_cursor(&e, -1, -5)
+		testing.expect_value(t, e.cur_x, 0)
+		testing.expect_value(t, e.cur_y, 0)
 	}
 }
