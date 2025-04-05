@@ -145,5 +145,34 @@ editor_move_cursor :: proc(e: ^EDITOR, x: i32, y: i32) {
 }
 
 editor_refresh_screen :: proc(e: ^EDITOR) {
+	using nc
 
+	clear()
+
+	for _, i in e.rows {
+		editor_draw_row(e, &e.rows[i], i)
+	}
+
+	move(e.cur_y, e.cur_x)
+
+}
+
+editor_process_keypress :: proc(e: ^EDITOR, ch: i32) {
+	using nc
+	switch ch {
+	case KEY_RIGHT:
+		editor_move_cursor(e, 1, 0)
+	case KEY_LEFT:
+		editor_move_cursor(e, -1, 0)
+	case KEY_DOWN:
+		editor_move_cursor(e, 0, 1)
+	case KEY_UP:
+		editor_move_cursor(e, 0, -1)
+	case KEY_BACKSPACE:
+		_row.row_remove_char(&e.rows[e.cur_y], int(e.cur_x - 1))
+		editor_move_cursor(e, -1, 0)
+	case:
+		_row.row_insert_char(&e.rows[e.cur_y], int(e.cur_x), u8(ch))
+		editor_move_cursor(e, 1, 0)
+	}
 }
