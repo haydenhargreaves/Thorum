@@ -50,10 +50,14 @@
     </li>
     <br>
     <li>
-      <code>win: ^nc.Window</code>
+      <code>win: nc.Window</code>
       <ul style="margin-block: 7.5px;">
         <li>
-          Ncurses window object used for drawing to the screen
+          Ncurses window object used for drawing to the screen.
+        </li>
+        <li>
+          <em>NOTE: Not stored as a pointer due to how odin handles
+            pointers</em>
         </li>
       </ul>
     </li>

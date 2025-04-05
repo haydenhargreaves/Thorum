@@ -18,6 +18,7 @@ test_editor_init :: proc(t: ^testing.T) {
 	testing.expect_value(t, cap(e.rows), 0)
 	testing.expect_value(t, e.cur_x, 0)
 	testing.expect_value(t, e.cur_y, 0)
+	testing.expect_value(t, &e.win != nil, true)
 }
 
 @(test)
