@@ -50,7 +50,7 @@
     </li>
     <br>
     <li>
-      <code>win: ^window.WINDOW</code>
+      <code>win: ^nc.Window</code>
       <ul style="margin-block: 7.5px;">
         <li>
           Ncurses window object used for drawing to the screen
@@ -86,7 +86,9 @@
   <p>
     Create a blank <code>EDITOR</code> struct which is used as the editor state
     during the lifetime of the program. The <code>rows</code> will be initialized
-    to an array with 0 length and 0 capacity and can be appended to.
+    to an array with 0 length and 0 capacity and can be appended to. This procedure
+    will initialize the <code>win</code> object as well. So there is no need to for
+    nil cases elsewhere.
   </p>
 
   <p><strong>Params</strong></p>
@@ -109,7 +111,8 @@
   <p>
     Free underlying memory the provided <code>EDITOR</code> struct. This procedure
     will also free the memory stored in the <code>EDITOR.rows[*].chars</code>. This
-    is a bit of a temporary solution.
+    is a bit of a temporary solution. This procedure will also end the <code>win</code>
+    so there is no need to cleanup the Ncurses window elsewhere.
   </p>
 
   <p><strong>Params</strong></p>
